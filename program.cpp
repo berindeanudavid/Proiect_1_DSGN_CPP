@@ -150,8 +150,8 @@ class Human : public Character{
         Human(int arg0_x, int arg1_y, Board* arg2_the_board, int arg3_age){
             x=arg0_x;
             y=arg1_y;
-            length=2;
-            width=2;
+            length=1;
+            width=1;
             the_board_ptr=arg2_the_board;
             age=arg3_age;
             sign='H';
@@ -164,8 +164,8 @@ class Elf : public Character{
         Elf(int arg0_x, int arg1_y, Board* arg2_the_board, int arg3_age){
             x=arg0_x;
             y=arg1_y;
-            length=2; //elfs are taller than humans :)
-            width=1;
+            length=3; //elfs are taller and fatter than humans :)
+            width=2;
             the_board_ptr=arg2_the_board;
             age=arg3_age;
             sign='E';
@@ -212,6 +212,34 @@ class DoubleSpeed : public BaseDecorator{
         }
 };
 
+class Group : public Character{
+    public:
+        list<Character*> group;
+        void addCharacter(Character* character_ptr){
+            group.push_back(character_ptr);
+        }
+        void moveUp() override{
+            for(Character* c : group){
+                c->moveUp();
+            }
+        }
+        void moveDown() override{
+            for(Character* c : group){
+                c->moveDown();
+            }
+        }
+        void moveLeft(){
+            for(Character* c : group){
+                c->moveLeft();
+            }
+        }
+        void moveRight(){
+            for(Character* c : group){
+                c->moveRight();
+            }
+        }
+};
+
 int main(){
     int board_width;
     int board_length;
@@ -231,6 +259,17 @@ int main(){
     speedyHuman2_ptr->moveDown();
     board1_ptr->render();
     speedyHuman2_ptr->moveRight();
+    board1_ptr->render();
+    Elf* elf1_ptr=new Elf(10,11,board1_ptr,20);
+    board1_ptr->render();
+    elf1_ptr->moveDown();
+    board1_ptr->render();
+    Group* group1_ptr=new Group();
+    group1_ptr->addCharacter(speedyHuman2_ptr);
+    group1_ptr->addCharacter(elf1_ptr);
+    group1_ptr->moveDown();
+    board1_ptr->render();
+    group1_ptr->moveDown();
     board1_ptr->render();
     return 0;
 }

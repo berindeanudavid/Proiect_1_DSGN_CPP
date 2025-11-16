@@ -147,28 +147,28 @@ class Character : public Entity{
 
 class Human : public Character{
     public:
-        int length=1;
-        int width=1;
-        char sign='H';
         Human(int arg0_x, int arg1_y, Board* arg2_the_board, int arg3_age){
             x=arg0_x;
             y=arg1_y;
             the_board_ptr=arg2_the_board;
             age=arg3_age;
+            length=1;
+            width=1;
+            sign='H';
             moveOnBoardIfOk(x,y,length,width,the_board_ptr,sign);
         }
 };
 
 class Elf : public Character{
     public:
-        int length=3; //elfs are taller and fatter than humans :)
-        int width=2;
-        char sign='E';
         Elf(int arg0_x, int arg1_y, Board* arg2_the_board, int arg3_age){
             x=arg0_x;
             y=arg1_y;
             the_board_ptr=arg2_the_board;
             age=arg3_age;
+            length=3; //elfs are taller and fatter than humans :)
+            width=2;
+            sign='E';
             moveOnBoardIfOk(x,y,length,width,the_board_ptr,sign);
         }
 };
@@ -371,9 +371,9 @@ class AsianFactory : public AbstractFactory{
 int main(){
     int board_width;
     int board_length;
-    cout << "Enter board width:";
+    cout << "Enter board width(if you want to be safe, just enter 100):";
     cin >> board_width;
-    cout << "Enter board length:";
+    cout << "Enter board length(if you want to be safe, just enter 100):";
     cin >> board_length;
     Board* board1_ptr=new Board(board_width,board_length);
     Human* human1_ptr=new Human(6,7,board1_ptr,100);
@@ -408,6 +408,10 @@ int main(){
     AfricanFactory* african_factory_ptr = new AfricanFactory();
     Building* african_castle_ptr = african_factory_ptr->createCastle(25,50,board1_ptr);
     board1_ptr->render();
+    european_castle_ptr->listParts();
+    european_house_ptr->listParts();
+    african_castle_ptr->listParts();
+    asian_house_ptr->listParts();
 
     return 0;
 }
